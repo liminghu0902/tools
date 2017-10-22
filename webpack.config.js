@@ -5,7 +5,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
 	entry: {
 		'main': './src/main.js',
-		'common': ['jquery']
+		'vendor': ['jquery']
 	},
 	output: {
 		path: path.resolve(__dirname, './build'),
@@ -20,10 +20,28 @@ module.exports = {
 			}
 		]
 	},
+	devServer: {
+		host: process.env.HOST,
+		overlay: {
+			errors: true,
+			warnings: true
+		},
+		hotOnly: true
+	},
+	devtool: 'source-map',
 	plugins: [
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
 			template: './index.html'
-		})
+		}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'vendor',
+			chunks: ['vendor']
+		}),
+		new webpack.optimize.UglifyJsPlugin({
+	      compress: {
+	        warnings: false
+	      }
+	    })
 	]
 }
