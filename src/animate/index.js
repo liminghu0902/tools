@@ -1,21 +1,11 @@
 
 
 function Animation(el, positions, url) {
-	var index = 0, len = positions.length;
-	el.style.backgroundImage='url('+ url +')';
+	
+}
 
-	function run() {
-		var position = positions[index].split(' ');
-		el.style.backgroundPosition = position[0] + 'px ' + position[1] + 'px';
-		index++;
-		
-		if(index >= len) {
-			index = 0;
-		}
-		setTimeout(run, 200)
-	}
-
-	run()
+Animation.prototype = {
+	
 }
 
 //预加载图片

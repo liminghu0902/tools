@@ -109,7 +109,6 @@ ImageLoader.prototype.onImageLoaded = function(item) {
 	if(!item) {
 		return false;
 	}
-
 	self.opts.onImageLoaded(item);
 }
 

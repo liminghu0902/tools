@@ -12,13 +12,28 @@
 </head>
 <body>
 	<div id="barid"></div>
+	<script src="../imageLoader/index.js"></script>
 	<script src="index.js"></script>
 	<script>
-		var el = document.getElementById('barid'),
-			position = ['0 0', '-136 0', '-272 0', '-408 0', '-544 0', '-680 0', '-816 0', '-952 0', '-1088 0'],
-			url = '../assets/images/barid.jpg';
-		Animation(el, position, url)
+		
+		var images = [
+		'http://hblive-img.b0.upaiyun.com/d3a4f0175b36ef84b36e66419626ac561dce8a9c', 
+		'http://hblive-img.b0.upaiyun.com/d3a4f0175b36ef84b36e66419626ac561dce8a9c'
+		];
 
+		var imgLoader = new ImageLoader({
+			images: images,
+			timeout: 1000,
+			onImageLoaded: function(item) {
+				console.log(item)
+			},
+			onAllImageLoaded: function(data) {
+				console.log(data)
+			},
+			onTimeout: function() {
+				alert('超时')
+			}
+		})
 	</script>
 </body>
 </html>
