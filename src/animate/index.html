@@ -5,8 +5,8 @@
 	<title>Document</title>
 	<style>
 		#barid{
-			width: 136px;
-			height: 88px;
+			height: 20px;
+			background-color: #5A1BEC;
 		}
 	</style>
 </head>
@@ -18,12 +18,16 @@
 		
 		var images = [
 		'http://hblive-img.b0.upaiyun.com/d3a4f0175b36ef84b36e66419626ac561dce8a9c', 
+		'http://hblive-img.b0.upaiyun.com/d3a4f0175b36ef84b36e66419626ac561dce8a9c',
+		'http://hblive-img.b0.upaiyun.com/d3a4f0175b36ef84b36e66419626ac561dce8a9322c', 
+		'http://hblive-img.b0.upaiyun.com/d3a4f0175b36ef84b36e66419626ac561dce8a9c',
+		'http://hblive-img.b0.upaiyun.com/d3a4f0175b36ef84b36e66419626ac561dce8a9c', 
 		'http://hblive-img.b0.upaiyun.com/d3a4f0175b36ef84b36e66419626ac561dce8a9c'
 		];
 
 		var imgLoader = new ImageLoader({
 			images: images,
-			timeout: 1000,
+			timeout: 10,
 			onImageLoaded: function(item) {
 				console.log(item)
 			},

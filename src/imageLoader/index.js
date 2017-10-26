@@ -45,10 +45,7 @@ function ImageLoader(options) {
 
 		item.img = new Image();
 
-		setTimeout(function(){
-			self.onLoad(item)
-		}, 2000)
-		// self.onLoad(item);
+		self.onLoad(item);
 	}
 
 	if(self.opts.timeout) {
@@ -82,6 +79,8 @@ ImageLoader.prototype.done = function(item) {
 	var self = this;
 	self.count++;
 
+	self.getProgress(self.count);
+
 	if(!item) {
 		return false;
 	}
@@ -109,7 +108,7 @@ ImageLoader.prototype.onImageLoaded = function(item) {
 	if(!item) {
 		return false;
 	}
-	self.opts.onImageLoaded(item);
+	self.opts.onImageLoaded && self.opts.onImageLoaded(item);
 }
 
 //所有图片加载完成
@@ -119,7 +118,7 @@ ImageLoader.prototype.onAllImageLoaded = function() {
 		success : self.success,
 		images: self.images
 	}
-	self.opts.onAllImageLoaded(data);
+	self.opts.onAllImageLoaded && self.opts.onAllImageLoaded(data);
 }
 
 //加载超时
@@ -132,3 +131,9 @@ ImageLoader.prototype.onTimeout = function() {
 	}, self.opts.timeout);
 }
 
+//获取图片加载进度
+ImageLoader.prototype.getProgress = function(count) {
+	var self = this;
+	var progress = (count/self.images.length).toFixed(2);
+	self.opts.progress && self.opts.progress(progress)
+}
