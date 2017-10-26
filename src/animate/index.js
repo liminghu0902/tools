@@ -1,10 +1,21 @@
 
 
 function Animation(el, positions, url) {
-	
+	this.taskQueue = [];
+	this.index = 0;
 }
 
-Animation.prototype = {
+//添加任务
+Animation.prototype._add = function(taskFn, type) {
+	this.taskQueue.push({
+		taskFn: taskFn,
+		type: type
+	})
+	return this;
+}
+
+//执行下一个任务
+Animation.prototype._next = function() {
 	
 }
 

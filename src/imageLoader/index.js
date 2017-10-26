@@ -97,7 +97,7 @@ ImageLoader.prototype.done = function(item) {
 		//如果所有图片加载完成，且没有超时，则清除定时器
 		if(self.count === self.images.length) {
 			clearTimeout(self.timer);
-			self.onAllImageLoaded(item);
+			self.onAllImageLoaded();
 		}
 	}
 }
@@ -126,8 +126,8 @@ ImageLoader.prototype.onTimeout = function() {
 	var self = this;
 	self.timer = setTimeout(function() {
 		self.isTimeout = true;
-		throw new Error('超时')
 		self.opts.onTimeout();
+		throw new Error('超时')
 	}, self.opts.timeout);
 }
 
