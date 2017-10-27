@@ -21,8 +21,12 @@ Animation.prototype._add = function(taskFn, type) {
 }
 
 //执行下一个任务
-Animation.prototype._next = function() {
-	this.index++;
+Animation.prototype._next = function(task) {
+	var self = this;
+	self.index++;
+	task.wait ? setTimeout(function() {
+		self._runTask();
+	}, task.wait) : self._runTask();
 }
 
 //执行任务
@@ -47,10 +51,10 @@ Animation.prototype._runTask = function() {
 //执行一个同步任务
 Animation.prototype._syncTask = function(task) {
 	var self = this;
-	var taskFn = function() {
+	var callback = function() {
 		self._next();
 	};
-	task.taskFn(taskFn);
+	task.taskFn(callback);
 }
 
 //执行一个异步任务
@@ -68,18 +72,51 @@ Animation.prototype.start = function(interval) {
 		return self;
 	}
 	self.state = STATE_START;
+	self.interval = interval;
+	self._runTask();
 
 	return self;
 }
 
 //预加载图片
-Animation.prototype.loadImage = function() {
-
+Animation.prototype.loadImage = function(images) {
+	var self = this;
+	var type = SYNC_TASK;
+	var taskFn = function(callback) {
+		new ImageLoader({
+			images: images.slice(),
+			onAllImageLoaded: function(data) {
+				if(data.success) {
+					callback && callback();
+				}
+			}
+		})
+	};
+	return this._add(taskFn, type);
 }
 
 //改变元素的background-position
-Animation.prototype.changePosition = function() {
+Animation.prototype.changePosition = function(el, positions, imgUrl) {
+	var self = this,
+		len = positions.length,
+		type = ASYNC_TASK,
+		taskFn;
+	if(len) {
+		taskFn = function(callback, time) {
+			var position, index;
+			if(imgUrl) {
+				el.style.backgroundImage = 'url('+ imgUrl +')';
+			};
+			index = 0;
+			position = positions[index].split(' ');
+			el.style.backgroundPosition = position[0] + 'px ' + position[1] + 'px'; 
+		};
+	} else {
+		taskFn = self._next;
+		type = SYNC_TASK;
+	}
 
+	return self._add(taskFn, type);
 }
 
 //每一帧动画的回调
