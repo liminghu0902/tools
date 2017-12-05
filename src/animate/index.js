@@ -1,7 +1,7 @@
 'use strict';
 
-var Timeline = require('./timeline');
-var loadImage = require('./imageloader');
+var Timeline = require('../timeline/index');
+var loadImage = require('../imageLoader/index');
 
 //初始化状态
 var STATE_INITIAL = 0;
